@@ -3,35 +3,602 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Bhuvan - Full Stack Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #00ff88;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 100px 2rem 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .home {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.5rem;
+            color: #cccccc;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-content .description {
+            font-size: 1.2rem;
+            color: #999999;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            color: #000000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .about {
+            background: #111111;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-categories {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .category {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #00ff88;
+            transition: all 0.3s ease;
+        }
+
+        .category:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .category h3 {
+            color: #00ff88;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .category ul {
+            list-style: none;
+        }
+
+        .category li {
+            padding: 0.5rem 0;
+            color: #cccccc;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .category li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #00aaff;
+        }
+
+        .projects {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        }
+
+        .projects h2 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.1);
+            border-color: #00ff88;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            color: #000000;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .project-link {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #00ff88;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #00ff88;
+            margin-top: 1rem;
+        }
+
+        .project-link:hover {
+            background: #00ff88;
+            color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .project-card h3 {
+            color: #00ff88;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-card p {
+            color: #cccccc;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .project-features {
+            list-style: none;
+        }
+
+        .project-features li {
+            padding: 0.8rem 0;
+            color: #999999;
+            position: relative;
+            padding-left: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00aaff;
+            font-weight: bold;
+        }
+
+        .contact {
+            background: #111111;
+        }
+
+        .contact-content {
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+        }
+
+        .contact-item h3 {
+            color: #00ff88;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item p {
+            color: #cccccc;
+            font-size: 1.1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .social-link {
+            display: inline-block;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .social-link:hover {
+            background: linear-gradient(45deg, #00ff88, #00aaff);
+            color: #000000;
+            transform: translateY(-3px);
+        }
+
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .section {
+                padding: 80px 1rem 30px;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body>
-    
-    <main>
-        <div class="nav_bar">
-            <br>
-            <a class="nav" href="index.html">Home</a><br>
-            <a class="nav" href="about.html">About Me</a><br>
-            <a class="nav" href="projects.html">Projects</a><br>
-            <a class="nav" href="contact.html">Contact</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Bhuvan</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
-        <div class="data" >
-            <img src="profile.jpg" alt="profile" height="450px" width="500px">
-            <div class="information">
+    </nav>
+    <section id="home" class="section home">
+        <div class="container">
+            <div class="hero-content">
                 <h1>Hi, I am Bhuvan</h1>
-                <br>
-                <p>I am a Full stack web developer, currently<br>studying B.Tech(AI&DS) 3rd year</p>
+                <p class="subtitle">Full Stack Web Developer</p>
+                <p class="description">Currently studying B.Tech (AI&DS) 3rd year, passionate about creating innovative web solutions and exploring cutting-edge technologies.</p>
+                <a href="#about" class="cta-button">Learn More About Me</a>
             </div>
         </div>
-    </main>
-    <footer>
-        <div class="social_media">
-            <a href="facebook.com"><img src="facebook.png" height="15px" width="15px"></a>
-            <a href="https://www.google.com/"><img src="google.png" height="15px" width="15px"></a>
-            <a href="https://x.com/Bhuvan318249340"><img src="twitter.jpg" height="15px" width="15px"></a>
-            <a href="https://github.com/Bhuvansairam05"><img src="github.jpg" height="15px" width="15px"></a>
+    </section>
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Me</h2>
+                    <p style="color: #cccccc; font-size: 1.1rem; line-height: 1.8;">
+                        I'm a passionate full-stack developer with a strong foundation in both frontend and backend technologies. 
+                        Currently pursuing B.Tech in AI & Data Science, I combine academic knowledge with practical experience 
+                        to create meaningful digital solutions.
+                    </p>
+                </div>
+                <div class="about-categories">
+                    <div class="category">
+                        <h3>Education</h3>
+                        <ul>
+                            <li>B.Tech (AI&DS) at VVIT with CGPA: 8.5 (2022-2026)</li>
+                            <li>Intermediate (MPC) at Bhashyam Educational Institutions with CGPA: 9.7 (2020-2022)</li>
+                            <li>SSC at Bhashyam Educational Institutions with CGPA: 10 (2019-2020)</li>
+                        </ul>
+                    </div>
+                    <div class="category">
+                        <h3>Technical Skills</h3>
+                        <ul>
+                            <li>Programming languages: C, Java, Python</li>
+                            <li>Frontend technologies: HTML, CSS, JavaScript</li>
+                            <li>Database: SQL</li>
+                        </ul>
+                    </div>
+                    <div class="category">
+                        <h3>Certifications</h3>
+                        <ul>
+                            <li>Programming in Java by Codetantra</li>
+                            <li>Programming in Java by NPTEL</li>
+                            <li>DSA using Java by NPTEL</li>
+                        </ul>
+                    </div>
+                    <div class="category">
+                        <h3>Hobbies</h3>
+                        <ul>
+                            <li>Listening to music</li>
+                            <li>Learning new technologies</li>
+                            <li>Practicing typing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
+    </section>
+    <section id="projects" class="section projects">
+        <div class="container">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Crop Monitoring System Using Computer Vision</h3>
+                    <p>A web-based crop monitoring system that utilizes computer vision to detect plant diseases and suggest appropriate treatments. The application provides an efficient and scalable solution for early detection of crop diseases, helping farmers and agricultural professionals take timely and informed actions.</p>
+                    <ul class="project-features">
+                        <li>Image upload and real-time disease analysis</li>
+                        <li>Integration with Plant.id API for accurate diagnosis</li>
+                        <li>Treatment suggestions based on API responses</li>
+                        <li>Backend built with Express.js to manage API calls and responses</li>
+                        <li>Responsive and user-friendly interface</li>
+                        <li>Supports precision agriculture for improved yield quality</li>
+                    </ul>
+                    <div class="project-tech">
+                        <span class="tech-tag">Express.js</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">API Integration</span>
+                    </div>
+                    <a href="https://github.com/Bhuvansairam05/Crop-Monitoring-Using-Computer-Vision" class="project-link" target="_blank">View on GitHub</a>
+                </div>
+                
+                <div class="project-card">
+                    <h3>Olympics Medal Tracker</h3>
+                    <p>A comprehensive web platform to display Olympic medal tallies across different Olympic Games, allowing users to compare performance between countries. Features real-time updates to share live Olympic news, scores, and event highlights with a user-friendly interface for smooth browsing.</p>
+                    <ul class="project-features">
+                        <li>Interactive Olympic medal tallies display</li>
+                        <li>Country-wise performance comparison tools</li>
+                        <li>Real-time updates for live Olympic news and scores</li>
+                        <li>Event highlights and detailed statistics</li>
+                        <li>Responsive design for optimal user experience</li>
+                        <li>Historical data analysis across multiple Olympic Games</li>
+                    </ul>
+                    <div class="project-tech">
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Express.js</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">API Integration</span>
+                    </div>
+                    <a href="https://github.com/Bhuvansairam05/Olympics-List" class="project-link" target="_blank">View on GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="contact-content">
+                <h2>Get In Touch</h2>
+                <p style="color: #cccccc; font-size: 1.2rem; margin-bottom: 2rem;">
+                    Feel free to reach out for any queries regarding my projects or profile
+                </p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>Email</h3>
+                        <p>bhuvanasairam2005@gmail.com</p>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/bhuvan0405/" class="social-link" title="LinkedIn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/Bhuvansairam05" class="social-link" title="GitHub">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+            }
+        });
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.category, .project-card, .contact-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
