@@ -266,7 +266,15 @@ body {
     color: #000000;
     transform: translateY(-2px);
 }
-
+.div-flex{
+    display: flex;
+    align-items: center;
+    gap:10px;
+}
+.demo{
+    display: inline-block;
+    padding-top:25px;
+}
 .project-card h3 {
     color: #00ff88;
     font-size: 2rem;
